@@ -9,12 +9,13 @@ namespace Homework.Tool
 {
     public class ConnectionFactory
     {
-        public IDbConnection CreateConnection()
+        public static IDbConnection CreateConnection()
         {
+            string connectionString;
 #if DEBUG
-           var ConnectionString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["SQLConnectionString"].ConnectionString;
+            connectionString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["SQLConnectionString"].ConnectionString;
 #endif
-            return new SqlConnection(ConnectionString);
+            return new SqlConnection(connectionString);
 
         }
     }
