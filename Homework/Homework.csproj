@@ -170,7 +170,7 @@
     <Compile Include="Models\DbModels\Suppliers.cs" />
     <Compile Include="Models\DbModels\Territories.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\ConnectionFactory.cs" />
+    <Compile Include="Tools\ConnectionTool.cs" />
     <Compile Include="Tools\DapperTool.cs" />
   </ItemGroup>
   <ItemGroup>

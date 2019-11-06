@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Homework.Tool
 {
-    public class ConnectionFactory
+    public class ConnectionTool
     {
         public static IDbConnection CreateConnection()
         {

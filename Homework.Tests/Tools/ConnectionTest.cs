@@ -14,8 +14,7 @@ namespace Homework.Tests.Tools
         [TestMethod]
         public void ConnectionStatus()
         {
-            ConnectionFactory connectionFactory = new ConnectionFactory();
-            var dbConnection = connectionFactory.CreateConnection();
+            var dbConnection = ConnectionTool.CreateConnection();
             Assert.IsNotNull(dbConnection);
         }
     }

@@ -25,9 +25,9 @@ namespace Homework.Tools
         /// <returns></returns>
         public async Task OpenConnection()
         {
-            if (_dbConnection != null)
+            if (_dbConnection == null)
             {
-                _dbConnection = ConnectionFactory.CreateConnection();
+                _dbConnection = ConnectionTool.CreateConnection();
             }
             await (_dbConnection as SqlConnection).OpenAsync();
         }
