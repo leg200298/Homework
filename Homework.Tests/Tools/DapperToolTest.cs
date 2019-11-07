@@ -33,10 +33,10 @@ namespace Homework.Tests.Tools
                     Discontinued = false
                 };
 
-                var InsertResult = await dapperTool.ExecuteAsync("insert into Products (ProductName,SupplierID,CategoryID,QuantityPerUnit,UnitPrice,UnitsInStock,UnitsOnOrder,ReorderLevel,Discontinued) VALUES " +
+                var insertResult = await dapperTool.ExecuteAsync("insert into Products (ProductName,SupplierID,CategoryID,QuantityPerUnit,UnitPrice,UnitsInStock,UnitsOnOrder,ReorderLevel,Discontinued) VALUES " +
                     "(@ProductName,@SupplierID,@CategoryID,@QuantityPerUnit,@UnitPrice,@UnitsInStock,@UnitsOnOrder,@ReorderLevel,@Discontinued)", products);
 
-                Assert.IsTrue(InsertResult.Success);
+                Assert.IsTrue(insertResult.Success);
 
                 var deleteResult = await dapperTool.ExecuteAsync("delete Products where ProductName = @ProductName and QuantityPerUnit = @QuantityPerUnit", products);
 
@@ -70,6 +70,36 @@ namespace Homework.Tests.Tools
             ProductRepository productRepository = new ProductRepository();
             var data = await productRepository.GetAsync(12);
             Assert.IsNotNull(data);
+        }
+        [TestMethod]
+        public async Task Update()
+        {
+            ProductRepository productRepository = new ProductRepository();
+
+            Products products = new Products()
+            {
+                ProductName = "Test ProductName",
+                SupplierID = 1,
+                CategoryID = 2,
+                QuantityPerUnit = "Test QuantityPerUnit",
+                UnitPrice = 3,
+                UnitsInStock = 4,
+                UnitsOnOrder = 5,
+                ReorderLevel = 6,
+                Discontinued = false
+            };
+            //using (DapperTool dapperTool = new DapperTool())
+            //{
+            //    await dapperTool.OpenConnection();      
+            //    var insertResult = await dapperTool.ExecuteAsync("insert into Products (ProductName,SupplierID,CategoryID,QuantityPerUnit,UnitPrice,UnitsInStock,UnitsOnOrder,ReorderLevel,Discontinued) VALUES " +
+            //        "(@ProductName,@SupplierID,@CategoryID,@QuantityPerUnit,@UnitPrice,@UnitsInStock,@UnitsOnOrder,@ReorderLevel,@Discontinued)", products);
+            //}
+
+            products.ProductID = 78;
+            products.ProductName = "Update to success";
+
+            var result = await productRepository.PutAsync(products);
+            Assert.IsTrue(result);
         }
     }
 }

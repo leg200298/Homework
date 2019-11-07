@@ -7,12 +7,12 @@ using System.Web;
 
 namespace Homework.Models.InterFaces
 {
-    public interface IProductRepository<RequestModel, DbModel>
+    public interface IProductRepository<DbModel>
     {
         Task<IEnumerable<DbModel>> GetAsync();
         Task<DbModel> GetAsync(int Id);
-        Task<DbModel> PostAsync(RequestModel postProduct);
-        Task<DbModel> PutAsync(RequestModel postProduct);
-        Task<DbModel> DeleteAsync(int Id);
+        Task<bool> PostAsync(DbModel postProduct);
+        Task<bool> PutAsync(DbModel postProduct);
+        Task<bool> DeleteAsync(int Id);
     }
 }

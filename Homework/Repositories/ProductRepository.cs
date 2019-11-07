@@ -1,6 +1,7 @@
 ﻿using Homework.Models;
 using Homework.Models.InterFaces;
 using Homework.Models.ProductView;
+using Homework.Services;
 using Homework.Tools;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,16 @@ using System.Web;
 
 namespace Homework.Repositories
 {
-    public class ProductRepository : IProductRepository<ProductRequest, Products>
+    public class ProductRepository : IProductRepository<Products>
     {
-        public Task<Products> DeleteAsync(int Id)
+        public async Task<bool> DeleteAsync(int Id)
         {
-            throw new NotImplementedException();
+            using (DapperTool dapperTool = new DapperTool())
+            {
+                await dapperTool.OpenConnection();
+                var result = await dapperTool.ExecuteAsync("select * from Products");
+                return result.Success;
+            }
         }
 
         public async Task<IEnumerable<Products>> GetAsync()
@@ -37,14 +43,27 @@ namespace Homework.Repositories
             }
         }
 
-        public Task<Products> PostAsync(ProductRequest postProduct)
+        public async Task<bool> PostAsync(Products product)
         {
-            throw new NotImplementedException();
+            using (DapperTool dapperTool = new DapperTool())
+            {
+                await dapperTool.OpenConnection();
+                var result = await dapperTool.ExecuteAsync("insert into Products (ProductName,SupplierID,CategoryID,QuantityPerUnit,UnitPrice,UnitsInStock,UnitsOnOrder,ReorderLevel,Discontinued) VALUES " +
+     "(@ProductName,@SupplierID,@CategoryID,@QuantityPerUnit,@UnitPrice,@UnitsInStock,@UnitsOnOrder,@ReorderLevel,@Discontinued)", product);
+
+                return result.Success;
+            }
         }
 
-        public Task<Products> PutAsync(ProductRequest postProduct)
+        public async Task<bool> PutAsync(Products product)
         {
-            throw new NotImplementedException();
+            using (DapperTool dapperTool = new DapperTool())
+            {
+                await dapperTool.OpenConnection();
+                var result = await dapperTool.ExecuteAsync("update Products set ProductName = @ProductName, SupplierID = @SupplierID, CategoryID = @CategoryID ,QuantityPerUnit = @QuantityPerUnit ,UnitPrice = @UnitPrice, UnitsInStock = @UnitsInStock, UnitsOnOrder = @UnitsOnOrder, ReorderLevel = @ReorderLevel, Discontinued =@Discontinued where ProductID = @ProductID ", product);
+
+                return result.Success;
+            }
         }
     }
 }
