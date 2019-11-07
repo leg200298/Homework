@@ -88,12 +88,6 @@ namespace Homework.Tests.Tools
                 ReorderLevel = 6,
                 Discontinued = false
             };
-            //using (DapperTool dapperTool = new DapperTool())
-            //{
-            //    await dapperTool.OpenConnection();      
-            //    var insertResult = await dapperTool.ExecuteAsync("insert into Products (ProductName,SupplierID,CategoryID,QuantityPerUnit,UnitPrice,UnitsInStock,UnitsOnOrder,ReorderLevel,Discontinued) VALUES " +
-            //        "(@ProductName,@SupplierID,@CategoryID,@QuantityPerUnit,@UnitPrice,@UnitsInStock,@UnitsOnOrder,@ReorderLevel,@Discontinued)", products);
-            //}
 
             products.ProductID = 78;
             products.ProductName = "Update to success";

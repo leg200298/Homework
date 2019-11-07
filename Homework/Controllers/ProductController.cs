@@ -1,6 +1,12 @@
-﻿using System;
+﻿using Homework.Models;
+using Homework.Models.InterFaces;
+using Homework.Models.ProductView;
+using Homework.Repositories;
+using Homework.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,27 +14,40 @@ namespace Homework.Controllers
 {
     public class ProductController : Controller
     {
-        // GET: Product
-        public ActionResult Index()
+        private readonly IProductRepository<Products> _productRepository;
+        private readonly ProductService _productService;
+        public ProductController()
         {
-            return View();
+            _productRepository = new ProductRepository();
+            _productService = new ProductService();
+        }
+        // GET: Product
+        public async Task<ActionResult> Index()
+        {
+            var result = await _productRepository.GetAsync();
+            List<ProductsResponse> data = new List<ProductsResponse>();
+            if (result != null)
+            {
+                data = _productService.GetAllService(result).ToList();
+            }
+            return View(data);
         }
 
         // GET: Product/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
             return View();
         }
 
         // GET: Product/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             return View();
         }
 
         // POST: Product/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(FormCollection collection)
         {
             try
             {
@@ -43,14 +62,14 @@ namespace Homework.Controllers
         }
 
         // GET: Product/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
             return View();
         }
 
         // POST: Product/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, FormCollection collection)
         {
             try
             {
@@ -65,14 +84,14 @@ namespace Homework.Controllers
         }
 
         // GET: Product/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             return View();
         }
 
         // POST: Product/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, FormCollection collection)
         {
             try
             {
