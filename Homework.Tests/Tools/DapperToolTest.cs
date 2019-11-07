@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Homework.Repositories;
 
 namespace Homework.Tests.Tools
 {
@@ -62,6 +63,13 @@ namespace Homework.Tests.Tools
                 var result = await dapperTool.QueryFirstOrDefaultAsync<Products>("select * from Products");
                 Assert.IsTrue(result.Success);
             }
+        }
+        [TestMethod]
+        public async Task GetOneData()
+        {
+            ProductRepository productRepository = new ProductRepository();
+            var data = await productRepository.GetAsync(12);
+            Assert.IsNotNull(data);
         }
     }
 }
