@@ -29,7 +29,7 @@ namespace Homework.Services
 
         public ProductsResponse GetService(Products products)
         {
-            var productsResponse =  new ProductsResponse()
+            var productsResponse = new ProductsResponse()
             {
                 ProductID = products.ProductID,
                 ProductName = products.ProductName,
@@ -62,10 +62,11 @@ namespace Homework.Services
             return products;
         }
 
-        public Products PutService(ProductRequest postProduct)
+        public Products PutService(int Id, ProductRequest postProduct)
         {
             Products products = new Products()
             {
+                ProductID = Id,
                 ProductName = postProduct.ProductName,
                 SupplierID = postProduct.SupplierID,
                 CategoryID = postProduct.CategoryID,

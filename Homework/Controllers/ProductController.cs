@@ -36,7 +36,8 @@ namespace Homework.Controllers
         // GET: Product/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var result = await _productRepository.GetAsync(id);
+            return View(result);
         }
 
         // GET: Product/Create
@@ -51,8 +52,11 @@ namespace Homework.Controllers
         {
             try
             {
+                ProductRequest productRequest = new ProductRequest();
+                TryUpdateModel(productRequest, collection);
                 // TODO: Add insert logic here
-
+                var data = _productService.PostService(productRequest);
+                var result = await _productRepository.PutAsync(data);
                 return RedirectToAction("Index");
             }
             catch
@@ -64,7 +68,13 @@ namespace Homework.Controllers
         // GET: Product/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var result = await _productRepository.GetAsync(id);
+            ProductRequest productRequest = new ProductRequest();
+            if (result != null)
+            {
+                productRequest = _productService.GetService(result);
+            }
+            return View(productRequest);
         }
 
         // POST: Product/Edit/5
@@ -73,8 +83,11 @@ namespace Homework.Controllers
         {
             try
             {
+                ProductRequest productRequest = new ProductRequest();
+                TryUpdateModel(productRequest, collection);
                 // TODO: Add update logic here
-
+                var data = _productService.PutService(id, productRequest);
+                var result = await _productRepository.PutAsync(data);
                 return RedirectToAction("Index");
             }
             catch
@@ -86,7 +99,13 @@ namespace Homework.Controllers
         // GET: Product/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var result = await _productRepository.GetAsync(id);
+            ProductRequest productRequest = new ProductRequest();
+            if (result != null)
+            {
+                productRequest = _productService.GetService(result);
+            }
+            return View(productRequest);
         }
 
         // POST: Product/Delete/5
@@ -96,7 +115,7 @@ namespace Homework.Controllers
             try
             {
                 // TODO: Add delete logic here
-
+                var result = await _productRepository.DeleteAsync(id);
                 return RedirectToAction("Index");
             }
             catch
