@@ -36,8 +36,13 @@ namespace Homework.Controllers
         // GET: Product/Details/5
         public async Task<ActionResult> Details(int id)
         {
+            ProductsResponse productsResponse = new ProductsResponse();
             var result = await _productRepository.GetAsync(id);
-            return View(result);
+            if (result != null)
+            {
+                productsResponse = _productService.GetService(result);
+            }
+            return View(productsResponse);
         }
 
         // GET: Product/Create
@@ -56,7 +61,7 @@ namespace Homework.Controllers
                 TryUpdateModel(productRequest, collection);
                 // TODO: Add insert logic here
                 var data = _productService.PostService(productRequest);
-                var result = await _productRepository.PutAsync(data);
+                var result = await _productRepository.PostAsync(data);
                 return RedirectToAction("Index");
             }
             catch

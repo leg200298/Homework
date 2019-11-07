@@ -18,7 +18,7 @@ namespace Homework.Repositories
             using (DapperTool dapperTool = new DapperTool())
             {
                 await dapperTool.OpenConnection();
-                var result = await dapperTool.ExecuteAsync("select * from Products");
+                var result = await dapperTool.ExecuteAsync("delete Products where ProductID = @ProductID", new { ProductID = Id });
                 return result.Success;
             }
         }
